@@ -189,7 +189,7 @@ func (_ manager) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	defer func() {
 		if rec := recover(); rec != nil {
-			log.Println("Internal Server Error: Could not serve page: ", r.Method, url_)
+			//log.Println("Internal Server Error: Could not serve page: ", r.Method, url_)
 			log.Println(rec)
 			log.Printf("%s", debug.Stack())
 			w.WriteHeader(http.StatusInternalServerError)
@@ -197,7 +197,7 @@ func (_ manager) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}()
 
 	if err != nil {
-		log.Println("Could not serve page: ", r.Method, r.URL.RequestURI(), "Error:", err)
+		//log.Println("Could not serve page: ", r.Method, r.URL.RequestURI(), "Error:", err)
 		w.WriteHeader(400)
 		w.Write([]byte("Client sent bad request."))
 		return
@@ -250,13 +250,13 @@ func (_ manager) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			}
 
 		} else {
-			log.Println("Problem with request. Error:", r.Method, state.httpCode, state.reason, "; Request: ", r.URL.RequestURI())
+			//log.Println("Problem with request. Error:", r.Method, state.httpCode, state.reason, "; Request: ", r.URL.RequestURI())
 			w.WriteHeader(state.httpCode)
 			w.Write([]byte(state.reason))
 		}
 
 	} else {
-		log.Println("Could not serve page, path not found: ", r.Method, url_)
+		//log.Println("Could not serve page, path not found: ", r.Method, url_)
 		//		println("Could not serve page, path not found: ", r.Method, url_)
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte("The resource in the requested path could not be found."))
@@ -284,7 +284,7 @@ func (man *manager) addEndPoint(ep endPointStruct) {
 
 //Registeres the function to be used for handling all requests directed to gorest.
 func HandleFunc(w http.ResponseWriter, r *http.Request) {
-	log.Println("Serving URL : ", r.Method, r.URL.RequestURI())
+	//log.Println("Serving URL : ", r.Method, r.URL.RequestURI())
 	defer func() {
 		if rec := recover(); rec != nil {
 			log.Println("Internal Server Error: Could not serve page: ", r.Method, r.RequestURI)

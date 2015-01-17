@@ -345,7 +345,7 @@ EPLOOP:
 					dataString := str1[i+1:]
 					if pName == XSXRF_PARAM_NAME {
 						xsrft = strings.Trim(dataString, " ")
-						log.Print("Session Id:", xsrft)
+						//log.Print("Session Id:", xsrft)
 					} else {
 						for _, par := range ep.queryParams {
 							if par.name == pName {
