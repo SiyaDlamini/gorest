@@ -45,6 +45,7 @@ const (
 	DELETE  = "DELETE"
 	HEAD    = "HEAD"
 	OPTIONS = "OPTIONS"
+	PATCH   = "PATCH"
 )
 
 type endPointStruct struct {
@@ -216,7 +217,7 @@ func (_ manager) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		if state.httpCode == http.StatusOK {
 			switch ep.requestMethod {
-			case POST, PUT, DELETE, HEAD, OPTIONS:
+			case POST, PUT, DELETE, HEAD, OPTIONS, PATCH:
 				{
 					if ctx.responseCode == 0 {
 						w.WriteHeader(getDefaultResponseCode(ep.requestMethod))
@@ -312,7 +313,7 @@ func Handle() manager {
 
 func getDefaultResponseCode(method string) int {
 	switch method {
-	case GET, PUT, DELETE:
+	case GET, PUT, DELETE, PATCH:
 		{
 			return 200
 		}

@@ -99,8 +99,10 @@ func makeEndPointStruct(tags reflect.StructTag, serviceRoot string) endPointStru
 			ms.requestMethod = HEAD
 		} else if tag == "OPTIONS" {
 			ms.requestMethod = OPTIONS
+		} else if tag == "PATCH" {
+			ms.requestMethod = PATCH
 		} else {
-			log.Panic("Unknown method type:[" + tag + "] in endpoint declaration. Allowed types {GET,POST,PUT,DELETE,HEAD,OPTIONS}")
+			log.Panic("Unknown method type:[" + tag + "] in endpoint declaration. Allowed types {GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS}")
 		}
 
 		if tag := tags.Get("path"); tag != "" {

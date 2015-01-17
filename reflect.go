@@ -116,7 +116,7 @@ func isLegalForRequestType(methType reflect.Type, ep endPointStruct) (cool bool)
 	numOut := 0
 
 	switch ep.requestMethod {
-	case POST, PUT:
+	case POST, PUT, PATCH:
 		{
 			numInputIgnore = 2 //The first param is the struct, the second the posted object
 			numOut = 0
@@ -249,14 +249,14 @@ func panicMethNotFound(methFound bool, ep endPointStruct, t reflect.Type, f refl
 		postIsArr = "map[string]"
 	}
 	var suffix string = "(" + isArr + ep.outputType + ")# with one(" + isArr + ep.outputType + ") return parameter."
-	if ep.requestMethod == POST || ep.requestMethod == PUT {
+	if ep.requestMethod == POST || ep.requestMethod == PUT || ep.requestMethod == PATCH {
 		str = "PostData " + postIsArr + ep.postdataType
 		if ep.paramLen > 0 {
 			str += ", "
 		}
 
 	}
-	if ep.requestMethod == POST || ep.requestMethod == PUT || ep.requestMethod == DELETE {
+	if ep.requestMethod == POST || ep.requestMethod == PUT || ep.requestMethod == PATCH || ep.requestMethod == DELETE {
 		suffix = "# with no return parameters."
 	}
 	if ep.isVariableLength {
@@ -312,7 +312,7 @@ Run:
 
 	targetMethod := servVal.Type().Method(ep.methodNumberInParent)
 	//For POST and PUT, make and add the first "postdata" argument to the argument list
-	if ep.requestMethod == POST || ep.requestMethod == PUT {
+	if ep.requestMethod == POST || ep.requestMethod == PUT || ep.requestMethod == PATCH {
 
 		//Get postdata here
 		//TODO: Also check if this is a multipart post and handle as required.
@@ -331,7 +331,7 @@ Run:
 
 	if len(context.args) == ep.paramLen || (ep.isVariableLength && ep.paramLen == 1) {
 		startIndex := 1
-		if ep.requestMethod == POST || ep.requestMethod == PUT {
+		if ep.requestMethod == POST || ep.requestMethod == PUT || ep.requestMethod == PATCH {
 			startIndex = 2
 		}
 
